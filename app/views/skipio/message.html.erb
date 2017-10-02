@@ -1,0 +1,11 @@
+<h1>Contact: <%= @contact['full_name'] %></h1>
+
+<div>Your Message (limit: <%= params[:max_length] %> characters)</div>
+
+<%= form_tag send_message_path, name: 'message', method: 'post' do %>
+  <input name="contact_id" type="hidden" value=<%= params[:id] %> >
+  <textarea name="message_text" maxlength=<%= params[:max_length] %> cols="50" row="10" placeholder="Write message here.. "></textarea>
+  <div class="row">
+    <input class="btn btn-info" type='submit' value='Send Message'/>
+  </div>
+<% end %>

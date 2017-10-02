@@ -1,15 +1,45 @@
-<%= image_tag @skipio_user_info.avatar_image_url %>
-<h1><%= @skipio_user_info.first_name %> <%= @skipio_user_info.last_name %></h1>
-<h1>Skipio Phone Number: <%= @skipio_user_info.skipio_phone_number %></h1>
-<h1>Number of Contacts: <%= @skipio_user_info.contacts_count %></h1>
-<h1>Time Zone: <%= @skipio_user_info.time_zone %></h1>
-<h1>Unread Messages: <%= @skipio_user_info.unread_count %></h1>
+<div class="row well">
+  <div class="col-sm-3">
+    <%= image_tag @skipio_user_info.avatar_image_url, class: "rounded-circle" %>
+    <h3><%= @skipio_user_info.first_name %> <%= @skipio_user_info.last_name %></h3>
+  </div>
+  <div class="col-sm-9 top-justify">
+    <div class="row">
+      <h5 class="col-sm-4">Phone Number: <%= @skipio_user_info.skipio_phone_number %></h5>
+      <h5 class="col-sm-4">Time Zone: <%= @skipio_user_info.time_zone %></h5>
+    </div>
+    <div class="row">
+      <h5 class="col-sm-4">Unread Messages: <%= @skipio_user_info.unread_count %></h5>
+      <h5 class="col-sm-4">Current Contacts: <%= @skipio_user_info.contacts_count %></h5>
+    </div>
+  </div>
+</div>
 
 
-<% @skipio_contacts.each do |contact| %>
-  <%= image_tag contact.avatar_url %>
-  <h3><%= contact.full_name %></h3>
-  <h3><%= contact.email %></h3>
-  <h3><%= contact.phone_number %></h3>
-<% end %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th>Contact</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Phone Number</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @skipio_contacts.each do |contact| %>
+      <tr>
+        <th><%= image_tag contact.avatar_url %></th>
+        <th><%= contact.full_name %></th>
+        <th><%= contact.email %></th>
+        <th><%= pretty_address(contact.street_address, contact.city, contact.state, contact.zip_code) %></th>
+        <th><%= contact.phone_mobile_national %></th>
+        <th><%= link_to 'Send Text', message_path(contact.id, contact: contact, max_length: @skipio_user_info.max_characters), class: 'btn btn-info' %></th>
+      </tr>
+    <% end %>
+  </tbody>  
+</table>
+
+
 

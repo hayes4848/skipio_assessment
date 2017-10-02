@@ -23,7 +23,6 @@ class FaradayConnect
   end
 
   def send_post_request
-    response = connection.post(index_path) { |r| r.body = data.to_json }
-    Hashie::Mash.new(JSON.parse(response.body))
+    connection.post(index_path) { |r| r.body = data.to_json }.status
   end
 end
